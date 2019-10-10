@@ -18,6 +18,18 @@ router.post(
     }
 );
 
+router.post('/login', async (req, res, next) => {
+    let user = req.body;
+    let loggedIn = await Users.login(user);
+    if (loggedIn) {
+        res.status(200).json({ message: 'Youre logged in' });
+    } else {
+        next(
+            'You shall not pass! Unauthorized, username or password incorrect'
+        );
+    }
+});
+
 //
 //Middleware
 function registerReqs(req, res, next) {
