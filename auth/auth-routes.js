@@ -6,12 +6,17 @@ router.get('/users', async (req, res) => {
     res.status(200).json(users);
 });
 
-router.post('/register', registerReqs, async (req, res, next) => {
-    let user = req.body;
+router.post(
+    '/register',
+    registerReqs,
+    takenUsername,
+    async (req, res, next) => {
+        let user = req.body;
 
-    let createdUser = await Users.addUser(user);
-    res.status(200).json(createdUser);
-});
+        let createdUser = await Users.addUser(user);
+        res.status(200).json(createdUser);
+    }
+);
 
 //
 //Middleware
@@ -29,6 +34,14 @@ function registerReqs(req, res, next) {
     next();
 }
 
-//TODO: username taken handler
+async function takenUsername(req, res, next) {
+    let user = req.body;
+
+    let username = await Users.checkUsername(user.username);
+    if (username) {
+        next('Username is already taken');
+    }
+    next();
+}
 
 module.exports = router;

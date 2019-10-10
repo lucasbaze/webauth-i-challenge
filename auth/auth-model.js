@@ -7,6 +7,7 @@ const db = knex(config);
 module.exports = {
     getUsers,
     addUser,
+    checkUsername,
 };
 
 function getUsers() {
@@ -21,4 +22,10 @@ function addUser(user) {
         username,
         password,
     });
+}
+
+function checkUsername(username) {
+    return db('users')
+        .where('username', username)
+        .first();
 }
