@@ -6,7 +6,7 @@ router.get('/users', async (req, res) => {
     res.status(200).json(users);
 });
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', registerReqs, async (req, res, next) => {
     let user = req.body;
 
     let createdUser = await Users.addUser(user);
@@ -15,20 +15,20 @@ router.post('/register', async (req, res, next) => {
 
 //
 //Middleware
-function accountCreationRequirements(req, res, next) {
+function registerReqs(req, res, next) {
     let user = req.body;
 
     if (!user || !user.username || !user.password) {
         next('Missing Parameters');
     }
 
-    switch (user.password) {
-        case user.password.length < 5:
-            next('Password must be 8 chars');
-            break;
-        default:
-            next();
+    if (user.password.length < 8) {
+        next('Password must be at least 8 chars');
     }
+
+    next();
 }
+
+//TODO: username taken handler
 
 module.exports = router;
