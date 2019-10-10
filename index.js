@@ -17,6 +17,7 @@ const server = express();
 
 //
 //Use middleware
+server.use(express.json());
 server.use(helmet());
 server.use(cors());
 server.use(morgan('tiny'));
@@ -27,7 +28,15 @@ server.get('/', (req, res) => {
     res.send('Inside server!');
 });
 
+//
+//Use middleware
 server.use('/api/auth', authRoutes);
+
+//
+//error handler
+server.use((err, req, res, next) => {
+    res.status(500).json(err);
+});
 
 //
 //PORT and listen
