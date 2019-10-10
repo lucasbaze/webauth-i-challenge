@@ -8,6 +8,10 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 //
+//Route middleware
+const authRoutes = require('./auth/auth-routes');
+
+//
 //Create App
 const server = express();
 
@@ -15,13 +19,15 @@ const server = express();
 //Use middleware
 server.use(helmet());
 server.use(cors());
-server.use(morgan('compact'));
+server.use(morgan('tiny'));
 
 //
 //Basic route
 server.get('/', (req, res) => {
     res.send('Inside server!');
 });
+
+server.use('/api/auth', authRoutes);
 
 //
 //PORT and listen
