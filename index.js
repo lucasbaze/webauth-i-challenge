@@ -30,7 +30,7 @@ server.get('/', (req, res) => {
 
 //
 //Use middleware
-server.use('/api/auth', authRoutes);
+server.use('/api', authRoutes);
 
 //
 //error handler
