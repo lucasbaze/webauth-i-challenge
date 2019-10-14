@@ -17,7 +17,7 @@ function getUsers() {
 
 function addUser(user) {
     let { username, password } = user;
-    password = b.hashSync(password, 10);
+    password = b.hashSync(password, 12);
 
     return db('users').insert({
         username,
