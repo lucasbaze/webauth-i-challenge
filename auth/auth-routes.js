@@ -1,11 +1,6 @@
 const router = require('express').Router();
 const Users = require('./auth-model');
 
-router.get('/users', restricted, async (req, res) => {
-    let users = await Users.getUsers();
-    res.status(200).json(users);
-});
-
 router.post(
     '/register',
     registerReqs,
@@ -69,7 +64,7 @@ async function takenUsername(req, res, next) {
 
     let username = await Users.checkUsername(user.username);
     if (username) {
-        next('Username is already taken');
+        next({ status: 401, message: 'Username is already taken' });
     }
     next();
 }
@@ -85,4 +80,5 @@ async function restricted(req, res, next) {
     }
 }
 
-module.exports = router;
+module.exports = { router, restricted: restricted };
+// module.exports.restricted = restricted;

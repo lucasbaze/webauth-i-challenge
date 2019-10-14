@@ -24,7 +24,9 @@ const sessionConfig = {
 
 //
 //Route middleware
-const authRoutes = require('./auth/auth-routes');
+const authRoutes = require('./auth/auth-routes').router;
+const restrictedRoutes = require('./restricted');
+const restricted = require('./auth/auth-routes').restricted;
 
 //
 //Create App
@@ -46,6 +48,7 @@ server.get('/', (req, res) => {
 
 //
 //Use middleware
+server.use('/api/restricted', restricted, restrictedRoutes);
 server.use('/api', authRoutes);
 
 //
