@@ -37,7 +37,9 @@ const server = express();
 //Use middleware
 server.use(express.json());
 server.use(helmet());
-server.use(cors());
+server.use(cors({
+    credentials: true
+}));
 server.use(morgan('tiny'));
 server.use(session(sessionConfig));
 
