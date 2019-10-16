@@ -39,7 +39,7 @@ server.use(express.json());
 server.use(helmet());
 server.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origins: 'http://localhost:3000'
 }));
 server.use(morgan('tiny'));
 server.use(session(sessionConfig));
