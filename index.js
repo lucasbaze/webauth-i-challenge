@@ -36,10 +36,10 @@ const server = express();
 //
 //Use middleware
 server.use(express.json());
-server.use(helmet.framegaurd());
+server.use(helmet());
 server.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000/*'
+    origin: 'http://localhost:3000'
 }));
 server.use(morgan('tiny'));
 server.use(session(sessionConfig));
