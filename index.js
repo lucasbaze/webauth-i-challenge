@@ -16,7 +16,7 @@ const sessionConfig = {
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30,
         secure: false,
-        httpOnly: false,
+        httpOnly: true,
         sameSite: false
     },
     resave: false,
@@ -38,7 +38,8 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 server.use(cors({
-    credentials: true
+    credentials: true,
+    origin: 'http://localhost:3000'
 }));
 server.use(morgan('tiny'));
 server.use(session(sessionConfig));
